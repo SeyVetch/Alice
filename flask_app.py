@@ -4,8 +4,7 @@ import json
 from random import choice
 from fuctions import *
 
-places = ("Пирамиды_Гизы", "Эйфелева_башня",
-          "Государственная_Третьяковская_галерея")
+places = ("Пирамиды_Гизы", "Пирамиды_Гизы")
 
 app = Flask(__name__)
 
@@ -105,12 +104,12 @@ def get_cities(req):
 def play_game(res, req):
     user_id = req['session']['user_id']
     place = sessionStorage[user_id]['место']
-    loc = list(map(lambda x:''.join(str(x).split(',')), get_coordinates(place)))
+    loc = list(map(lambda x:''.join(str(x).split(',')), list(map(lambda x:''.join(str(x).split('.')), get_coordinates(place)))))
     sessionStorage[user_id]['curAns'] = sorted(list(map(lambda x: x[(sessionStorage[user_id]['counter'] - 1)*2:sessionStorage[user_id]['counter']*2], loc)))
     res['response']['text'] = \
         'Запиши слитно корни этого уравнения в порядке возрастания: '+\
         createFunction(sessionStorage[user_id]['curAns'][0],
-                       sessionStorage[user_id]['curAns'][1])+str(sessionStorage[user_id]['curAns'][0])+str(sessionStorage[user_id]['curAns'][1])
+                       sessionStorage[user_id]['curAns'][1])+' ответ: '+str(sessionStorage[user_id]['curAns'][0])+str(sessionStorage[user_id]['curAns'][1])
 
 
 if __name__ == '__main__':
