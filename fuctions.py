@@ -47,4 +47,3 @@ def createFunction(e, f):
         s = "+" + str(c)
     return "x^2" + res + s
 
-
